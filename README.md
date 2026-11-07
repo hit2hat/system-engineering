@@ -20,3 +20,10 @@ CREATE TABLE IF NOT EXISTS tasks (
     user_id INT REFERENCES users(id) ON DELETE CASCADE
 );
 ```
+
+### Initial user (admin:1234567890)
+```sql
+INSERT INTO users (username, password_hash, role) VALUES 
+('admin', '/XtkDcq6LqxEyTqq6kA8AA==:jRH0G7F3wU0uBjUJpCQmYy5040Yak5Yw6dG/iJx/iao=', 'ADMIN')
+ON CONFLICT (username) DO NOTHING;
+```
