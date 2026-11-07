@@ -80,9 +80,11 @@ const Tasks = ({ id, openPanel }) => {
         <Panel id={id}>
             <PanelHeader
                 before={
-                    <PanelHeaderButton>
-                        <Icon28SettingsOutline />
-                    </PanelHeaderButton>
+                    role === 'ADMIN' && (
+                        <PanelHeaderButton>
+                            <Icon28SettingsOutline />
+                        </PanelHeaderButton>
+                    )
                 }
                 after={
                     <PanelHeaderButton onClick={() => openPanel('task-create')}>
