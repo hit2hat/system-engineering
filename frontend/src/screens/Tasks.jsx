@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { Icon28SettingsOutline, Icon28AddOutline } from '@vkontakte/icons';
 import { Panel, PanelHeader, PanelHeaderButton, PanelSpinner, Group } from '@vkontakte/vkui';
 
-const Tasks = ({ id, openPanel }) => {
+const Tasks = ({ id, openView, openPanel }) => {
     const [ loaded, setLoaded ] = useState(false);
     const [ tasks, setTasks ] = useState([]);
 
@@ -81,7 +81,7 @@ const Tasks = ({ id, openPanel }) => {
             <PanelHeader
                 before={
                     role === 'ADMIN' && (
-                        <PanelHeaderButton>
+                        <PanelHeaderButton onClick={() => openView('admin')}>
                             <Icon28SettingsOutline />
                         </PanelHeaderButton>
                     )

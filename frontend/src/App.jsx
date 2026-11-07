@@ -1,5 +1,6 @@
 import Home from './pages/Home';
 import { useState } from 'react';
+import Admin from './pages/Admin';
 import Login from './pages/Login';
 import { AppRoot, Root } from '@vkontakte/vkui';
 
@@ -15,6 +16,10 @@ const App = () => {
                 />
                 <Home
                     id="home"
+                    openView={setActiveView}
+                />
+                <Admin
+                    id="admin"
                     openView={setActiveView}
                 />
             </Root>

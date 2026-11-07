@@ -40,7 +40,7 @@ const getActionText = (status) => {
     }
 }
 
-const Task = ({ id, title, description, status, onAction, onDelete }) => {
+const Task = ({ title, description, status, onAction, onDelete }) => {
     return (
         <Box margin="m">
             <ContentCard
