@@ -1,0 +1,12 @@
+# IDE
+.idea
+.vscode
+
+# Sensitive
+.env
+
+# Artefacts
+target
+
+# Development
+.local
