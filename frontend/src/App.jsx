@@ -1,13 +1,23 @@
-import { AppRoot, View, Panel, PanelHeader } from '@vkontakte/vkui';
+import Home from './pages/Home';
+import { useState } from 'react';
+import Login from './pages/Login';
+import { AppRoot, Root } from '@vkontakte/vkui';
 
 const App = () => {
+    const [ activeView, setActiveView ] = useState('login');
+
     return (
         <AppRoot>
-            <View id="123" activePanel="123">
-                <Panel id="123">
-                    <PanelHeader>123</PanelHeader>
-                </Panel>
-            </View>
+            <Root activeView={activeView}>
+                <Login
+                    id="login"
+                    openView={setActiveView}
+                />
+                <Home
+                    id="home"
+                    openView={setActiveView}
+                />
+            </Root>
         </AppRoot>
     );
 };
