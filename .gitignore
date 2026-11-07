@@ -5,8 +5,9 @@
 # Sensitive
 .env
 
-# Artefacts
+# Artefacts & deps
 target
+frontend/node_modules
 
 # Development
 .local
