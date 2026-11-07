@@ -54,6 +54,16 @@ public class TaskHandler implements HttpHandler {
                 }
 
                 TaskCreateRequest req = reqOpt.get();
+                if (req.title.isEmpty() || req.title.length() > 100) {
+                    exchange.sendResponseHeaders(400, -1);
+                    break;
+                }
+
+                if (req.description.length() > 255) {
+                    exchange.sendResponseHeaders(400, -1);
+                    break;
+                }
+
                 taskDao.create(req.title(), req.description(), "created", user.id());
 
                 exchange.sendResponseHeaders(200, -1);
