@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { Icon28AddOutline } from '@vkontakte/icons';
 import { Panel, PanelHeader, PanelHeaderBack, PanelHeaderButton, PanelSpinner, Group } from '@vkontakte/vkui';
 
-const Users = ({ id, openView }) => {
+const Users = ({ id, openPanel, openView }) => {
     const [ loaded, setLoaded ] = useState(false);
     const [ users, setUsers ] = useState([]);
     const accessToken = useSelector((store) => store.auth.accessToken);
