@@ -60,7 +60,7 @@ public class UserHandler implements HttpHandler {
                 }
 
                 UserCreateRequest req = reqOpt.get();
-                if (!req.role().equals("ADMIN") && !req.role().equals("USER")) {
+                if (!req.role().equals("ADMIN") && !req.role().equals("CLIENT")) {
                     exchange.getResponseHeaders().set("Content-Type", "application/json");
                     exchange.sendResponseHeaders(400, 0);
                     JsonUtil.writeJson(exchange.getResponseBody(), Map.of("error", "Unknown user role"));
