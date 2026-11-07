@@ -10,7 +10,7 @@ import java.util.List;
 public class TaskDao {
     public List<Task> findByUserId(int userId) {
         List<Task> list = new ArrayList<>();
-        String sql = "SELECT * FROM tasks WHERE id = ?";
+        String sql = "SELECT * FROM tasks WHERE user_id = ?";
 
         try (Connection c = DatabaseConfig.getConnection(); PreparedStatement ps = c.prepareStatement(sql)) {
             ps.setInt(1, userId);
