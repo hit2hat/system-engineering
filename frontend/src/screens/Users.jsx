@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { Icon28AddOutline } from '@vkontakte/icons';
 import { Panel, PanelHeader, PanelHeaderBack, PanelHeaderButton, PanelSpinner, Group } from '@vkontakte/vkui';
 
-const Users = ({ id, openPanel, openView }) => {
+const Users = ({ id, openPanel, openView, selectUser }) => {
     const [ loaded, setLoaded ] = useState(false);
     const [ users, setUsers ] = useState([]);
     const accessToken = useSelector((store) => store.auth.accessToken);
@@ -23,27 +23,6 @@ const Users = ({ id, openPanel, openView }) => {
             })
             .catch(() => null);
     };
-
-    // const actionTask = (id) => {
-    //     return fetch('http://localhost:8080/api/task', {
-    //         method: 'PUT',
-    //         headers: {
-    //             'Authorization': `Bearer ${accessToken}`,
-    //         },
-    //         body: JSON.stringify({
-    //             id,
-    //         }),
-    //     })
-    //         .then(async (res) => {
-    //             if (res.status !== 200) {
-    //                 return false;
-    //             }
-    //
-    //             await refreshTasks();
-    //             return true;
-    //         })
-    //         .catch(() => false);
-    // };
 
     const deleteUser = (id) => {
         return fetch('http://localhost:8080/api/user', {
@@ -98,6 +77,10 @@ const Users = ({ id, openPanel, openView }) => {
                                 key={x.id}
                                 {...x}
                                 onDelete={() => deleteUser(x.id)}
+                                onEdit={() => {
+                                    selectUser(x);
+                                    openPanel('user-change-password');
+                                }}
                             />
                         );
                     })}

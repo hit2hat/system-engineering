@@ -9,7 +9,6 @@ const UserCreate = ({ id, openPanel }) => {
     const accessToken = useSelector((store) => store.auth.accessToken);
 
     const createUser = async () => {
-        console.log(role);
         const body = await fetch('http://localhost:8080/api/user', {
             method: 'POST',
             headers: {

@@ -35,6 +35,13 @@ const User = ({ id, username, role, onEdit, onDelete }) => {
                         <Button
                             size="s"
                             stretched
+                            onClick={onEdit}
+                        >
+                            Изменить пароль
+                        </Button>
+                        <Button
+                            size="s"
+                            stretched
                             appearance="negative"
                             onClick={onDelete}
                         >

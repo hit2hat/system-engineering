@@ -67,6 +67,18 @@ public class UserDao {
         }
     }
 
+    public void update(int id, String hash) {
+        String sql = "UPDATE users SET password_hash = ? WHERE id = ?";
+
+        try (Connection c = DatabaseConfig.getConnection(); PreparedStatement ps = c.prepareStatement(sql)) {
+            ps.setString(1, hash);
+            ps.setInt(2, id);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            System.out.printf("Error while executing query: %s\n", e.getMessage());
+        }
+    }
+
     public void delete(int id) {
         String sql = "DELETE FROM users WHERE id = ?";
 

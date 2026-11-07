@@ -14,6 +14,7 @@ import java.util.Optional;
 public class UserHandler implements HttpHandler {
     private final UserDao userDao;
     public record UserCreateRequest(String username, String password, String role) {}
+    public record UserUpdateRequest(int id, String password) {}
     public record UserDeleteRequest(int id) {}
 
     public UserHandler(UserDao userDao) {
@@ -91,6 +92,31 @@ public class UserHandler implements HttpHandler {
 
                 try {
                     userDao.create(req.username(), PasswordUtil.hashPassword(req.password()), req.role());
+                    exchange.sendResponseHeaders(200, -1);
+                } catch (Exception e) {
+                    exchange.sendResponseHeaders(500, -1);
+                }
+
+                break;
+            }
+
+            case "PUT": {
+                Optional<UserUpdateRequest> reqOpt = JsonUtil.fromJson(exchange.getRequestBody(), UserUpdateRequest.class);
+                if (reqOpt.isEmpty()) {
+                    exchange.sendResponseHeaders(400, -1);
+                    break;
+                }
+
+                UserUpdateRequest req = reqOpt.get();
+                if (req.password().length() < 8 || req.password().length() > 64) {
+                    exchange.getResponseHeaders().set("Content-Type", "application/json");
+                    exchange.sendResponseHeaders(400, 0);
+                    JsonUtil.writeJson(exchange.getResponseBody(), Map.of("error", "Password too weak"));
+                    break;
+                }
+
+                try {
+                    userDao.update(req.id(), PasswordUtil.hashPassword(req.password()));
                     exchange.sendResponseHeaders(200, -1);
                 } catch (Exception e) {
                     exchange.sendResponseHeaders(500, -1);
