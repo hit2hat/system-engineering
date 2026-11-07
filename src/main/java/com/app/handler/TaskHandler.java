@@ -78,6 +78,18 @@ public class TaskHandler implements HttpHandler {
                 }
 
                 TaskDeleteRequest req = reqOpt.get();
+                Optional<Task> taskOpt = taskDao.findById(req.id);
+                if (taskOpt.isEmpty()) {
+                    exchange.sendResponseHeaders(404, -1);
+                    break;
+                }
+
+                Task task = taskOpt.get();
+                if (task.userId() != user.id() && !user.role().equals("ADMIN")) {
+                    exchange.sendResponseHeaders(403, -1);
+                    break;
+                }
+
                 taskDao.delete(req.id());
 
                 exchange.sendResponseHeaders(200, -1);
