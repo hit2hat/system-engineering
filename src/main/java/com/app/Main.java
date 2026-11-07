@@ -17,6 +17,7 @@ public class Main {
 
         HttpServer server = HttpServer.create(new InetSocketAddress(8080), 0);
         server.setExecutor(Executors.newVirtualThreadPerTaskExecutor());
+        server.createContext("/", new StaticHandler());
         server.createContext("/api/login", new CorsMiddleware(new AuthHandler(userDao)));
         server.createContext("/api/task", new CorsMiddleware(new TaskHandler(taskDao)));
         server.createContext("/api/user", new CorsMiddleware(new UserHandler(userDao)));

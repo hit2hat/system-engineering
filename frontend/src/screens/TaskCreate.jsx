@@ -8,7 +8,7 @@ const TaskCreate = ({ id, openPanel }) => {
     const accessToken = useSelector((store) => store.auth.accessToken);
 
     const createTask = async () => {
-        const body = await fetch('http://localhost:8080/api/task', {
+        const body = await fetch('/api/task', {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${accessToken}`,

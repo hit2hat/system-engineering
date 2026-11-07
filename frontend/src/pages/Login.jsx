@@ -9,7 +9,7 @@ const Login = ({ id, openView }) => {
     const [ password, setPassword ] = useState('1234567890');
 
     const login = async () => {
-        const body = await fetch('http://localhost:8080/api/login', {
+        const body = await fetch('/api/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

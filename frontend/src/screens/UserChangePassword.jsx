@@ -7,7 +7,7 @@ const UserChangePassword = ({ id, selectedUser, openPanel }) => {
     const accessToken = useSelector((store) => store.auth.accessToken);
 
     const changePassword = async () => {
-        const body = await fetch('http://localhost:8080/api/user', {
+        const body = await fetch('/api/user', {
             method: 'PUT',
             headers: {
                 'Authorization': `Bearer ${accessToken}`,

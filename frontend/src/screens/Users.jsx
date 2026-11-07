@@ -10,7 +10,7 @@ const Users = ({ id, openPanel, openView, selectUser }) => {
     const accessToken = useSelector((store) => store.auth.accessToken);
 
     const refreshUsers = () => {
-        return fetch('http://localhost:8080/api/user', {
+        return fetch('/api/user', {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${accessToken}`,
@@ -25,7 +25,7 @@ const Users = ({ id, openPanel, openView, selectUser }) => {
     };
 
     const deleteUser = (id) => {
-        return fetch('http://localhost:8080/api/user', {
+        return fetch('/api/user', {
             method: 'DELETE',
             headers: {
                 'Authorization': `Bearer ${accessToken}`,

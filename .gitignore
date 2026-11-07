@@ -8,6 +8,8 @@
 # Artefacts & deps
 target
 frontend/node_modules
+frontend/dist
+src/main/resources/public
 
 # Development
 .local

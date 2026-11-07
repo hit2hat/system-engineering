@@ -12,7 +12,7 @@ const Tasks = ({ id, openView, openPanel }) => {
     const accessToken = useSelector((store) => store.auth.accessToken);
 
     const refreshTasks = () => {
-        return fetch('http://localhost:8080/api/task', {
+        return fetch('/api/task', {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${accessToken}`,
@@ -27,7 +27,7 @@ const Tasks = ({ id, openView, openPanel }) => {
     };
 
     const actionTask = (id) => {
-        return fetch('http://localhost:8080/api/task', {
+        return fetch('/api/task', {
             method: 'PUT',
             headers: {
                 'Authorization': `Bearer ${accessToken}`,
@@ -48,7 +48,7 @@ const Tasks = ({ id, openView, openPanel }) => {
     };
 
     const deleteTask = (id) => {
-        return fetch('http://localhost:8080/api/task', {
+        return fetch('/api/task', {
             method: 'DELETE',
             headers: {
                 'Authorization': `Bearer ${accessToken}`,
