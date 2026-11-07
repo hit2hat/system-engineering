@@ -13,6 +13,7 @@ import java.util.Optional;
 public class TaskHandler implements HttpHandler {
     private final TaskDao taskDao;
     public record TaskCreateRequest(String title, String description) {}
+    public record TaskUpdateRequest(int id) {}
     public record TaskDeleteRequest(int id) {}
 
     public TaskHandler(TaskDao taskDao) {
@@ -65,6 +66,47 @@ public class TaskHandler implements HttpHandler {
                 }
 
                 taskDao.create(req.title(), req.description(), "created", user.id());
+
+                exchange.sendResponseHeaders(200, -1);
+                break;
+            }
+
+            case "PUT": {
+                Optional<TaskUpdateRequest> reqOpt = JsonUtil.fromJson(exchange.getRequestBody(), TaskUpdateRequest.class);
+                if (reqOpt.isEmpty()) {
+                    exchange.sendResponseHeaders(400, -1);
+                    break;
+                }
+
+                TaskUpdateRequest req = reqOpt.get();
+                Optional<Task> taskOpt = taskDao.findById(req.id);
+                if (taskOpt.isEmpty()) {
+                    exchange.sendResponseHeaders(404, -1);
+                    break;
+                }
+
+                Task task = taskOpt.get();
+                if (task.userId() != user.id() && !user.role().equals("ADMIN")) {
+                    exchange.sendResponseHeaders(403, -1);
+                    break;
+                }
+
+                switch (task.status()) {
+                    case "created": {
+                        taskDao.updateStatus(req.id, "working");
+                        break;
+                    }
+
+                    case "working": {
+                        taskDao.updateStatus(req.id, "done");
+                        break;
+                    }
+
+                    default: {
+                        exchange.sendResponseHeaders(400, -1);
+                        break;
+                    }
+                }
 
                 exchange.sendResponseHeaders(200, -1);
                 break;

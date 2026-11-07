@@ -11,12 +11,8 @@ const Tasks = ({ id, openPanel }) => {
     const role = useSelector((store) => store.auth.role);
     const accessToken = useSelector((store) => store.auth.accessToken);
 
-    useEffect(() => {
-        if (!accessToken) {
-            return;
-        }
-
-        fetch('http://localhost:8080/api/task', {
+    const refreshTasks = () => {
+        return fetch('http://localhost:8080/api/task', {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${accessToken}`,
@@ -28,6 +24,56 @@ const Tasks = ({ id, openPanel }) => {
                 setLoaded(true);
             })
             .catch(() => null);
+    };
+
+    const actionTask = (id) => {
+        return fetch('http://localhost:8080/api/task', {
+            method: 'PUT',
+            headers: {
+                'Authorization': `Bearer ${accessToken}`,
+            },
+            body: JSON.stringify({
+                id,
+            }),
+        })
+            .then(async (res) => {
+                if (res.status !== 200) {
+                    return false;
+                }
+
+                await refreshTasks();
+                return true;
+            })
+            .catch(() => false);
+    };
+
+    const deleteTask = (id) => {
+        return fetch('http://localhost:8080/api/task', {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${accessToken}`,
+            },
+            body: JSON.stringify({
+                id,
+            }),
+        })
+            .then(async (res) => {
+                if (res.status !== 200) {
+                    return false;
+                }
+
+                await refreshTasks();
+                return true;
+            })
+            .catch(() => false);
+    };
+
+    useEffect(() => {
+        if (!accessToken) {
+            return;
+        }
+
+        refreshTasks();
     }, [ accessToken ]);
 
     return (
@@ -53,6 +99,8 @@ const Tasks = ({ id, openPanel }) => {
                             <Task
                                 key={x.id}
                                 {...x}
+                                onAction={() => actionTask(x.id)}
+                                onDelete={() => deleteTask(x.id)}
                             />
                         );
                     })}
